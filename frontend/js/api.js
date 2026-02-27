@@ -3,7 +3,9 @@
 //  Toutes les requêtes HTTP passent par ce fichier
 // ============================================================
 
-const API = 'http://localhost:3000/api';  // URL du backend
+const API = ((typeof window !== 'undefined' && window.location && window.location.origin)
+  ? window.location.origin
+  : 'http://localhost:3000') + '/api';
 
 // ── Helpers ──────────────────────────────────────────────────
 

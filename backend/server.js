@@ -12,7 +12,7 @@ const orderRoutes   = require('./routes/orders');
 const productRoutes = require('./routes/products');
 
 const app  = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ── Middleware ──────────────────────────────────────────────
 app.use(cors());                          // Autorise les requêtes du frontend
