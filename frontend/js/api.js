@@ -32,13 +32,28 @@ async function request(method, endpoint, body = null, auth = false) {
   };
   if (body) options.body = JSON.stringify(body);
 
-  const res = await fetch(API + endpoint, options);
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.error || 'Erreur serveur');
+  let res;
+  try {
+    res = await fetch(API + endpoint, options);
+  } catch (e) {
+    throw new Error('Impossible de contacter le serveur.');
   }
-  return data;
+
+  const ct = res.headers.get('content-type') || '';
+  if (ct.includes('application/json')) {
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      throw new Error((data && data.error) || 'Erreur serveur');
+    }
+    if (data == null) {
+      throw new Error('Réponse JSON invalide du serveur.');
+    }
+    return data;
+  } else {
+    const text = await res.text();
+    const snippet = text.slice(0, 120).replace(/\s+/g, ' ');
+    throw new Error(`Réponse inattendue du serveur: "${snippet}"`);
+  }
 }
 
 // ── Fonctions API Auth ────────────────────────────────────────
