@@ -1,0 +1,368 @@
+/* ============================================================
+   style.css — Design Lumière Cosmétiques
+   ============================================================ */
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  --cream:      #FAF6F1;
+  --gold:       #C9A96E;
+  --gold-light: #E8D5B0;
+  --dark:       #1A1410;
+  --brown:      #5C3D2E;
+  --text:       #3A2C22;
+  --muted:      #8A7A6E;
+  --border:     rgba(201,169,110,0.3);
+  --shadow:     0 8px 40px rgba(26,20,16,0.12);
+  --error-bg:   #FFF0F0;
+  --error-bd:   #FFD0D0;
+  --error-txt:  #C05050;
+  --ok-bg:      #F0FFF5;
+  --ok-bd:      #A0DFB0;
+  --ok-txt:     #2D7A4A;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  font-weight: 300;
+  min-height: 100vh;
+}
+a { cursor: pointer; }
+
+/* ── Pages ──────────────────────────────────────────────────── */
+.page         { display: none; animation: fadeIn .45s ease; }
+.page.active  { display: block; }
+.hidden       { display: none !important; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+  background: var(--dark);
+  height: 68px;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 6px;
+  cursor: pointer;
+}
+.logo span { font-style: italic; color: var(--gold-light); }
+
+nav { display: flex; align-items: center; gap: 28px; }
+nav button {
+  background: none; border: none;
+  color: #a09088;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px; font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s;
+}
+nav button:hover { color: var(--gold); }
+
+#cartBtn {
+  background: var(--gold);
+  color: var(--dark);
+  border-radius: 2px;
+  padding: 8px 18px;
+  font-weight: 500;
+}
+#cartBtn:hover { background: var(--gold-light); color: var(--dark); }
+#cartCount {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--brown); color: #fff;
+  border-radius: 50%; width: 18px; height: 18px;
+  font-size: 10px; margin-left: 6px;
+}
+
+/* ── Boutons ─────────────────────────────────────────────────── */
+.btn-primary, .btn-secondary {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 13px 32px; border-radius: 2px;
+  cursor: pointer; transition: all .22s;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--gold); color: var(--dark); border-color: var(--gold);
+}
+.btn-primary:hover  { background: var(--gold-light); border-color: var(--gold-light); }
+.btn-primary:disabled { opacity:.5; cursor:not-allowed; }
+.btn-secondary {
+  background: transparent; color: var(--gold); border-color: var(--gold);
+}
+.btn-secondary:hover { background: var(--gold); color: var(--dark); }
+.full { width: 100%; }
+
+/* ── Messages ────────────────────────────────────────────────── */
+.msg {
+  padding: 10px 14px; border-radius: 2px;
+  font-size: 13px; margin-bottom: 14px;
+}
+.msg.error   { background:var(--error-bg); border:1px solid var(--error-bd); color:var(--error-txt); }
+.msg.success { background:var(--ok-bg);    border:1px solid var(--ok-bd);    color:var(--ok-txt); }
+
+/* ── Formulaires ─────────────────────────────────────────────── */
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.form-group input {
+  width: 100%; padding: 11px 14px;
+  border: 1px solid var(--border); border-radius: 2px;
+  font-family: 'Jost', sans-serif; font-size: 14px; color: var(--text);
+  background: var(--cream); outline: none; transition: border-color .2s;
+}
+.form-group input:focus { border-color: var(--gold); background: #fff; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── Loading ─────────────────────────────────────────────────── */
+.loading {
+  text-align: center; padding: 60px; color: var(--muted);
+  font-size: 14px; letter-spacing: 2px;
+}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  background: var(--dark);
+  min-height: 420px;
+  display: flex; align-items: center;
+  padding: 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; right: -120px; top: -120px;
+  width: 580px; height: 580px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,169,110,.07) 0%, transparent 70%);
+}
+.hero-text { max-width: 560px; }
+.hero-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 60px; font-weight: 300; line-height: 1.1;
+  color: var(--cream); margin-bottom: 20px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero p { color: #9A9088; font-size: 15px; line-height: 1.7; margin-bottom: 32px; }
+
+/* ── Section ─────────────────────────────────────────────────── */
+.section { padding: 72px 64px; }
+.section-sub {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px; font-weight: 300; color: var(--dark);
+  margin-bottom: 44px;
+}
+
+/* ── Produits ────────────────────────────────────────────────── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  gap: 28px;
+}
+.product-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 4px;
+  overflow: hidden; transition: transform .3s, box-shadow .3s;
+}
+.product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.product-img {
+  height: 210px; display: flex; align-items: center; justify-content: center;
+  font-size: 60px;
+  background: linear-gradient(135deg, #FDF5E6 0%, #F5E6D0 100%);
+  position: relative;
+}
+.badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--gold); color: var(--dark);
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 1px; font-weight: 500;
+}
+.product-info { padding: 18px; }
+.product-cat  { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.product-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--dark); margin-bottom: 7px; }
+.product-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; }
+.product-price  { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: var(--brown); font-weight: 600; }
+.add-btn {
+  background: var(--dark); color: var(--gold); border: none;
+  padding: 8px 14px; font-size: 10px; letter-spacing: 1.5px;
+  text-transform: uppercase; cursor: pointer; border-radius: 2px;
+  font-family: 'Jost', sans-serif; transition: background .2s;
+}
+.add-btn:hover { background: var(--brown); }
+
+/* ── Auth ────────────────────────────────────────────────────── */
+.auth-container { max-width: 460px; margin: 80px auto; padding: 0 24px; }
+.auth-box {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 4px; padding: 44px; box-shadow: var(--shadow);
+}
+.auth-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 300;
+  text-align: center; color: var(--dark); margin-bottom: 4px;
+}
+.auth-sub {
+  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); text-align: center; margin-bottom: 32px;
+}
+.switch-auth { text-align: center; font-size: 13px; color: var(--muted); margin-top: 18px; }
+.switch-auth a { color: var(--gold); text-decoration: underline; cursor: pointer; }
+
+/* ── Panier ──────────────────────────────────────────────────── */
+.cart-container { max-width: 860px; margin: 0 auto; padding: 56px 24px; }
+.cart-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: var(--dark); margin-bottom: 32px; }
+.cart-item {
+  background: #fff; border: 1px solid var(--border); border-radius: 4px;
+  padding: 22px; display: flex; align-items: center; gap: 18px; margin-bottom: 14px;
+}
+.ci-icon  { font-size: 38px; width: 60px; text-align: center; }
+.ci-info  { flex: 1; }
+.ci-name  { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--dark); }
+.ci-price { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.qty-wrap { display: flex; align-items: center; gap: 10px; }
+.qty-btn  {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border); background: #fff; border-radius: 2px;
+  cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center;
+  transition: all .18s;
+}
+.qty-btn:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+.qty-num { font-size: 14px; min-width: 22px; text-align: center; }
+.ci-total { font-family: 'Cormorant Garamond', serif; font-size: 21px; color: var(--brown); font-weight: 600; min-width: 80px; text-align: right; }
+.rm-btn   { background: none; border: none; color: #C08080; cursor: pointer; font-size: 17px; }
+
+.cart-empty { text-align: center; padding: 80px 0; color: var(--muted); }
+.cart-empty .big-icon { font-size: 72px; margin-bottom: 18px; }
+.cart-empty p { font-size: 16px; margin-bottom: 22px; }
+
+.summary-box {
+  background: var(--dark); border-radius: 4px; padding: 28px; margin-top: 20px;
+}
+.summary-line {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: #908880; margin-bottom: 10px;
+}
+.summary-total {
+  display: flex; justify-content: space-between;
+  font-family: 'Cormorant Garamond', serif; font-size: 24px;
+  color: var(--gold); border-top: 1px solid rgba(201,169,110,.2);
+  padding-top: 14px; margin-top: 6px;
+}
+.cart-actions { display: flex; justify-content: space-between; margin-top: 18px; }
+
+/* ── Paiement ────────────────────────────────────────────────── */
+.payment-container { max-width: 660px; margin: 0 auto; padding: 56px 24px; }
+.steps { display: flex; margin-bottom: 32px; }
+.step {
+  flex: 1; text-align: center; padding: 11px;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  border-bottom: 2px solid var(--border); color: var(--muted);
+}
+.step.active { border-bottom-color: var(--gold); color: var(--gold); }
+.step.done   { border-bottom-color: var(--brown); color: var(--brown); }
+.payment-box { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 36px; }
+.pay-recap {
+  background: var(--cream); border-radius: 3px; padding: 16px;
+  font-size: 13px; color: var(--muted); margin: 20px 0; line-height: 1.8;
+}
+.pay-actions { display: flex; justify-content: space-between; margin-top: 8px; }
+.secure-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 16px; letter-spacing: 1px; }
+
+/* ── Facture ─────────────────────────────────────────────────── */
+.invoice-container { max-width: 780px; margin: 0 auto; padding: 56px 24px; }
+.invoice-actions { display: flex; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+
+#invoiceDoc {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 4px; padding: 56px; box-shadow: var(--shadow);
+}
+.inv-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 28px; margin-bottom: 36px; border-bottom: 2px solid var(--gold); }
+.inv-logo   { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); letter-spacing: 4px; }
+.inv-logo small { display: block; font-family: 'Jost', sans-serif; font-style: normal; font-size: 9px; letter-spacing: 3px; color: var(--muted); margin-top: 4px; }
+.inv-address { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.8; }
+.inv-meta   { text-align: right; font-size: 13px; color: var(--muted); line-height: 1.7; }
+.inv-label  { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--dark); margin-bottom: 4px; }
+.inv-paid   { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 16px; margin-top: 8px; }
+
+.inv-section { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--dark); margin-bottom: 12px; }
+.inv-client  { background: var(--cream); padding: 18px; border-radius: 3px; font-size: 13px; line-height: 1.9; margin-bottom: 28px; }
+
+.inv-table   { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.inv-table th { text-align: left; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); padding: 9px 11px; border-bottom: 1px solid var(--border); font-weight: 500; font-family: 'Jost', sans-serif; }
+.inv-table td { padding: 13px 11px; font-size: 13px; border-bottom: 1px solid rgba(201,169,110,.1); }
+.right { text-align: right; }
+
+.inv-totals       { text-align: right; margin-top: 8px; }
+.inv-totals div   { font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+.inv-grand        { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--brown); border-top: 2px solid var(--gold); padding-top: 12px; margin-top: 10px; }
+
+.inv-footer { margin-top: 44px; text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #9A8A7A; border-top: 1px solid var(--border); padding-top: 22px; line-height: 1.9; }
+
+/* ── Mon Compte ──────────────────────────────────────────────── */
+.account-container { max-width: 760px; margin: 0 auto; padding: 56px 24px; }
+.account-info { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 28px; margin-bottom: 8px; font-size: 14px; line-height: 2; }
+.account-info strong { color: var(--dark); }
+.order-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 22px; margin-bottom: 14px; font-size: 13px; }
+.order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.order-id    { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--dark); }
+.order-badge { background: var(--gold); color: var(--dark); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 1px; }
+.order-total { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown); font-weight: 600; }
+
+/* ── Toast ───────────────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--dark); color: var(--gold);
+  padding: 13px 22px; border-radius: 3px;
+  font-size: 13px; letter-spacing: .5px;
+  z-index: 999; border-left: 3px solid var(--gold);
+  transform: translateY(80px); opacity: 0;
+  transition: all .3s ease; pointer-events: none;
+}
+.toast.show { transform: none; opacity: 1; }
+
+/* ── Impression (PDF) ────────────────────────────────────────── */
+@media print {
+  header, .invoice-actions, .toast, #page-home, #page-login,
+  #page-cart, #page-payment, #page-account { display: none !important; }
+  #page-invoice { display: block !important; }
+  #invoiceDoc   { box-shadow: none !important; border: none !important; }
+  .btn-primary, .btn-secondary { display: none !important; }
+}
+
+/* ── Responsive basique ──────────────────────────────────────── */
+@media (max-width: 700px) {
+  header { padding: 0 20px; }
+  .hero  { padding: 48px 24px; }
+  .hero h1 { font-size: 40px; }
+  .section { padding: 48px 24px; }
+  nav button:not(#cartBtn):not(#nav-logout) { display: none; }
+  .cart-item { flex-wrap: wrap; }
+}

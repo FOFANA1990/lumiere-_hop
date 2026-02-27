@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUMIÈRE — Cosmétiques</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo" onclick="showPage('home')">LUMI<span>ÈRE</span></div>
+  <nav>
+    <button onclick="showPage('home')">Boutique</button>
+    <button id="nav-login"   onclick="showPage('login')">Connexion</button>
+    <button id="nav-account" onclick="showPage('account')" class="hidden">Mon compte</button>
+    <button id="nav-logout"  onclick="logout()" class="hidden"></button>
+    <button id="cartBtn"     onclick="openCart()">🛒 Panier <span id="cartCount">0</span></button>
+  </nav>
+</header>
+
+<!-- ===== PAGE : ACCUEIL ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-label">✦ Collection 2025</div>
+      <h1>La beauté,<br/><em>réinventée</em></h1>
+      <p>Des formules d'exception, des textures somptueuses.</p>
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Découvrir →</button>
+    </div>
+  </div>
+  <div class="section" id="products">
+    <p class="section-sub">✦ Sélection exclusive</p>
+    <h2 class="section-title">Nos Soins &amp; Maquillage</h2>
+    <div class="products-grid" id="productsGrid">
+      <div class="loading">Chargement des produits...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE : CONNEXION / INSCRIPTION ===== -->
+<div class="page" id="page-login">
+  <div class="auth-container">
+    <div class="auth-box">
+
+      <!-- Formulaire Connexion -->
+      <div id="loginForm">
+        <h2 class="auth-title">Connexion</h2>
+        <p class="auth-sub">✦ Espace Client</p>
+        <div class="msg error hidden" id="loginError"></div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="loginEmail" placeholder="exemple@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" id="loginPassword" placeholder="••••••••"
+                 onkeydown="if(event.key==='Enter') login()"/>
+        </div>
+        <button class="btn-primary full" onclick="login()">Se connecter</button>
+        <p class="switch-auth">Pas de compte ? <a onclick="toggleAuth('register')">Créer un compte</a></p>
+      </div>
+
+      <!-- Formulaire Inscription -->
+      <div id="registerForm" class="hidden">
+        <h2 class="auth-title">Inscription</h2>
+        <p class="auth-sub">✦ Rejoignez-nous</p>
+        <div class="msg error hidden"   id="regError"></div>
+        <div class="msg success hidden" id="regSuccess"></div>
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" id="regName" placeholder="Marie Dupont"/>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="regEmail" placeholder="exemple@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Mot de passe (min. 6 car.)</label>
+          <input type="password" id="regPassword" placeholder="••••••••"
+                 onkeydown="if(event.key==='Enter') register()"/>
+        </div>
+        <button class="btn-primary full" onclick="register()">Créer mon compte</button>
+        <p class="switch-auth">Déjà un compte ? <a onclick="toggleAuth('login')">Se connecter</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE : PANIER ===== -->
+<div class="page" id="page-cart">
+  <div class="cart-container">
+    <h2 class="cart-title">Mon Panier</h2>
+    <div id="cartItems"></div>
+    <div id="cartSummary" class="hidden">
+      <div class="summary-box">
+        <div class="summary-line"><span>Sous-total HT</span><span id="sSubtotal"></span></div>
+        <div class="summary-line"><span>TVA (20%)</span>    <span id="sTax"></span></div>
+        <div class="summary-line"><span>Livraison</span>    <span>Offerte</span></div>
+        <div class="summary-total"><span>Total TTC</span>   <span id="sTotal"></span></div>
+      </div>
+      <div class="cart-actions">
+        <button class="btn-secondary" onclick="showPage('home')">← Continuer</button>
+        <button class="btn-primary"   onclick="goToPayment()">Commander →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE : PAIEMENT ===== -->
+<div class="page" id="page-payment">
+  <div class="payment-container">
+    <div class="steps">
+      <div class="step done">1. Panier</div>
+      <div class="step active">2. Paiement</div>
+      <div class="step">3. Confirmation</div>
+    </div>
+    <div class="payment-box">
+      <h2 class="section-title" style="margin-bottom:28px">Informations de paiement</h2>
+      <div class="msg error hidden" id="payError"></div>
+
+      <div class="form-group">
+        <label>Nom sur la carte</label>
+        <input type="text" id="cardName" placeholder="Marie Dupont"/>
+      </div>
+      <div class="form-group">
+        <label>Numéro de carte</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456"
+               maxlength="19" oninput="formatCard(this)"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Expiration</label>
+          <input type="text" id="cardExpiry" placeholder="MM/AA"
+                 maxlength="5" oninput="formatExpiry(this)"/>
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="text" id="cardCvv" placeholder="123" maxlength="3"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Adresse de livraison</label>
+        <input type="text" id="shipAddress" placeholder="12 Rue de la Paix, 75001 Paris"/>
+      </div>
+
+      <!-- Récap commande -->
+      <div class="pay-recap" id="payRecap"></div>
+
+      <div class="pay-actions">
+        <button class="btn-secondary" onclick="showPage('cart')">← Retour</button>
+        <button class="btn-primary"   onclick="processPayment()" id="payBtn">Payer →</button>
+      </div>
+      <p class="secure-note">🔒 Paiement simulé — aucune vraie carte requise</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE : FACTURE ===== -->
+<div class="page" id="page-invoice">
+  <div class="invoice-container">
+    <div class="invoice-actions">
+      <button class="btn-primary"   onclick="printInvoice()">⬇ Télécharger PDF</button>
+      <button class="btn-secondary" onclick="showPage('home')">← Boutique</button>
+    </div>
+
+    <div id="invoiceDoc">
+      <div class="inv-header">
+        <div>
+          <div class="inv-logo">LUMIÈRE<small>Cosmétiques de luxe</small></div>
+          <div class="inv-address">12 Rue du Faubourg Saint-Honoré<br/>75008 Paris, France<br/>contact@lumiere.fr</div>
+        </div>
+        <div class="inv-meta">
+          <div class="inv-label">FACTURE</div>
+          <div id="invNumber"></div>
+          <div id="invDate"></div>
+          <div class="inv-paid">✓ Payée</div>
+        </div>
+      </div>
+
+      <h4 class="inv-section">Client</h4>
+      <div class="inv-client" id="invClient"></div>
+
+      <h4 class="inv-section">Détail de la commande</h4>
+      <table class="inv-table">
+        <thead>
+          <tr><th>Produit</th><th>Prix unitaire</th><th>Qté</th><th class="right">Total</th></tr>
+        </thead>
+        <tbody id="invItems"></tbody>
+      </table>
+
+      <div class="inv-totals">
+        <div>Sous-total HT : <strong id="invHT"></strong></div>
+        <div>TVA 20% : <strong id="invTax"></strong></div>
+        <div>Livraison : <strong>Offerte</strong></div>
+        <div class="inv-grand">Total TTC : <strong id="invTotal"></strong></div>
+      </div>
+
+      <div class="inv-footer">
+        Merci pour votre confiance — LUMIÈRE Cosmétiques<br/>
+        N° SIRET : 123 456 789 00012 — TVA : FR12 123456789
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE : MON COMPTE ===== -->
+<div class="page" id="page-account">
+  <div class="account-container">
+    <h2 class="section-title">Mon Compte</h2>
+    <div class="account-info" id="accountInfo"></div>
+    <h3 style="margin:32px 0 16px; font-family:'Cormorant Garamond',serif; font-weight:400; font-size:24px;">Historique des commandes</h3>
+    <div id="orderHistory"></div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="js/api.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
